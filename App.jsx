@@ -1,12 +1,14 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 
-// المكوّنات المحلية (نفس المجلد)
+// المكوّنات المحلية
 import { Card, CardContent } from "./Card.jsx";
 import { Button } from "./Button.jsx";
 import { Input, Textarea, Label } from "./Input.jsx";
 import { Switch } from "./Switch.jsx";
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "./Select.jsx";
+import {
+  Select, SelectTrigger, SelectContent, SelectItem, SelectValue,
+} from "./Select.jsx";
 
 // أيقونات
 import {
@@ -70,7 +72,8 @@ const STR = {
     createJoining: "Create Joining Reminder (.ics)",
     recentCandidates: "Recent Candidates",
     none: "No candidates yet.",
-    footer: "This is a front-end demo: email sending opens your email client and calendar invites download as .ics files.",
+    footer:
+      "This is a front-end demo: email sending opens your email client and calendar invites download as .ics files.",
     lang: "Language",
     ratings: {
       sy: "Strong Yes",
@@ -80,8 +83,8 @@ const STR = {
       no: "No",
       sno: "Strong No",
     },
-    inviteEmailSubject: (title)=>`Interview Invitation — ${title}`,
-    inviteEmailBody: ({name, role, start, mode, location, hm})=>
+    inviteEmailSubject: (title) => `Interview Invitation — ${title}`,
+    inviteEmailBody: ({ name, role, start, mode, location, hm }) =>
       `Hello ${name},
 
 We have scheduled your interview for ${start}.
@@ -92,8 +95,8 @@ An .ics calendar invite has been downloaded for you. Please add it to your calen
 
 Regards,
 ${hm || "Hiring Team"}`,
-    inviteTitle: ({role, name})=>`${role} Interview — ${name}`,
-    inviteDesc: ({name, role, mode, location, hm})=>
+    inviteTitle: ({ role, name }) => `${role} Interview — ${name}`,
+    inviteDesc: ({ name, role, mode, location, hm }) =>
       `Dear ${name},
 
 You are invited to an interview for the role: ${role}.
@@ -102,8 +105,8 @@ Location/Link: ${location}
 
 Best regards,
 ${hm || "Hiring Team"}`,
-    offerSubject: (role)=>`Job Offer — ${role}`,
-    offerBody: ({name, role, salary, currency, start, notes, hm})=>
+    offerSubject: (role) => `Job Offer — ${role}`,
+    offerBody: ({ name, role, salary, currency, start, notes, hm }) =>
       `Dear ${name},
 
 We are pleased to extend an offer for the role of ${role}.
@@ -116,10 +119,11 @@ Please reply to confirm.
 
 Best regards,
 ${hm || "Hiring Team"}`,
-    joiningTitle: (name)=>`Joining Day — ${name}`,
-    joiningDesc: (name, role)=>`Reminder: ${name} joining ${role}.`,
-    joiningSubject: (name, date)=>`Reminder: ${name} joins on ${date}`,
-    joiningBody: (name, date)=>`This is a reminder that ${name} is scheduled to start on ${date}.`,
+    joiningTitle: (name) => `Joining Day — ${name}`,
+    joiningDesc: (name, role) => `Reminder: ${name} joining ${role}.`,
+    joiningSubject: (name, date) => `Reminder: ${name} joins on ${date}`,
+    joiningBody: (name, date) =>
+      `This is a reminder that ${name} is scheduled to start on ${date}.`,
   },
   ar: {
     appTitle: "نظام توظيف مبسّط — سير التوظيف",
@@ -175,7 +179,8 @@ ${hm || "Hiring Team"}`,
     createJoining: "إنشاء تذكير المباشرة (.ics)",
     recentCandidates: "المرشحون حديثًا",
     none: "لا يوجد مرشحون بعد.",
-    footer: "هذه نسخة واجهة أمامية فقط: الإرسال يفتح برنامج البريد لديك وملفات التقويم تُحمّل بصيغة .ics.",
+    footer:
+      "هذه نسخة واجهة أمامية فقط: الإرسال يفتح برنامج البريد لديك وملفات التقويم تُحمّل بصيغة .ics.",
     lang: "اللغة",
     ratings: {
       sy: "موافقة قوية",
@@ -185,8 +190,8 @@ ${hm || "Hiring Team"}`,
       no: "رفض",
       sno: "رفض قوي",
     },
-    inviteEmailSubject: (title)=>`دعوة مقابلة — ${title}`,
-    inviteEmailBody: ({name, role, start, mode, location, hm})=>
+    inviteEmailSubject: (title) => `دعوة مقابلة — ${title}`,
+    inviteEmailBody: ({ name, role, start, mode, location, hm }) =>
       `مرحبًا ${name},
 
 تم تحديد موعد المقابلة لوظيفة ${role} بتاريخ ${start}.
@@ -197,8 +202,8 @@ ${hm || "Hiring Team"}`,
 
 تحياتي،
 ${hm || "فريق التوظيف"}`,
-    inviteTitle: ({role, name})=>`${role} — مقابلة ${name}`,
-    inviteDesc: ({name, role, mode, location, hm})=>
+    inviteTitle: ({ role, name }) => `${role} — مقابلة ${name}`,
+    inviteDesc: ({ name, role, mode, location, hm }) =>
       `عزيزي/عزيزتي ${name},
 
 ندعوك لمقابلة على وظيفة: ${role}.
@@ -207,8 +212,8 @@ ${hm || "فريق التوظيف"}`,
 
 مع خالص التحية،
 ${hm || "فريق التوظيف"}`,
-    offerSubject: (role)=>`عرض وظيفي — ${role}`,
-    offerBody: ({name, role, salary, currency, start, notes, hm})=>
+    offerSubject: (role) => `عرض وظيفي — ${role}`,
+    offerBody: ({ name, role, salary, currency, start, notes, hm }) =>
       `عزيزي/عزيزتي ${name},
 
 يسعدنا تقديم عرض لوظيفة ${role}.
@@ -221,10 +226,10 @@ ${hm || "فريق التوظيف"}`,
 
 تحياتنا،
 ${hm || "فريق التوظيف"}`,
-    joiningTitle: (name)=>`يوم المباشرة — ${name}`,
-    joiningDesc: (name, role)=>`تذكير: مباشرة ${name} على وظيفة ${role}.`,
-    joiningSubject: (name, date)=>`تذكير: مباشرة ${name} بتاريخ ${date}`,
-    joiningBody: (name, date)=>`تذكير بأن ${name} سيباشر بتاريخ ${date}.`,
+    joiningTitle: (name) => `يوم المباشرة — ${name}`,
+    joiningDesc: (name, role) => `تذكير: مباشرة ${name} على وظيفة ${role}.`,
+    joiningSubject: (name, date) => `تذكير: مباشرة ${name} بتاريخ ${date}`,
+    joiningBody: (name, date) => `تذكير بأن ${name} سيباشر بتاريخ ${date}.`,
   },
 };
 
@@ -241,21 +246,13 @@ function fmtDateTimeLocal(dt) {
 }
 
 function toICS({ title, description = "", start, end, location = "", organizerEmail = "", attendees = [] }) {
-  function toUTCString(dt) {
+  const toUTCString = (dt) => {
     const d = new Date(dt);
-    return (
-      d.getUTCFullYear().toString().padStart(4, "0") +
-      String(d.getUTCMonth() + 1).padStart(2, "0") +
-      String(d.getUTCDate()).padStart(2, "0") +
-      "T" +
-      String(d.getUTCHours()).padStart(2, "0") +
-      String(d.getUTCMinutes()).padStart(2, "0") +
-      String(d.getUTCSeconds()).padStart(2, "0") +
-      "Z"
-    );
-  }
+    const z = (n, l = 2) => String(n).padStart(l, "0");
+    return `${z(d.getUTCFullYear(), 4)}${z(d.getUTCMonth() + 1)}${z(d.getUTCDate())}T${z(d.getUTCHours())}${z(d.getUTCMinutes())}${z(d.getUTCSeconds())}Z`;
+  };
   const uid = `${Date.now()}-${Math.random().toString(36).slice(2)}@ats-lite`;
-  const ics = [
+  const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//ATS Lite//EN",
@@ -267,14 +264,14 @@ function toICS({ title, description = "", start, end, location = "", organizerEm
     `DTSTART:${toUTCString(start)}`,
     `DTEND:${toUTCString(end)}`,
     `SUMMARY:${title}`,
-    `DESCRIPTION:${description.replace(/\\n/g, "\\\\n")}`,
+    `DESCRIPTION:${(description || "").replace(/\n/g, "\\n")}`,
     location ? `LOCATION:${location}` : "",
     organizerEmail ? `ORGANIZER:MAILTO:${organizerEmail}` : "",
-    ...attendees.map(a => `ATTENDEE;CN=${a.name || "Attendee"}:MAILTO:${a.email}`),
+    ...attendees.map((a) => `ATTENDEE;CN=${a.name || "Attendee"}:MAILTO:${a.email}`),
     "END:VEVENT",
     "END:VCALENDAR",
-  ].filter(Boolean).join("\\n");
-  return ics;
+  ].filter(Boolean);
+  return lines.join("\r\n");
 }
 
 function download(filename, content, mime = "text/calendar") {
@@ -300,7 +297,7 @@ function mailto({ to, cc = [], subject, body }) {
 
 // ---------- UI atoms ----------
 const Section = ({ title, icon: Icon, children, right }) => (
-  <Card>
+  <Card className="rounded-2xl shadow-sm">
     <div className="flex items-center justify-between p-4 border-b">
       <div className="flex items-center gap-2">
         {Icon ? <Icon className="w-5 h-5" /> : null}
@@ -308,11 +305,13 @@ const Section = ({ title, icon: Icon, children, right }) => (
       </div>
       {right}
     </div>
-    <CardContent>{children}</CardContent>
+    <CardContent className="p-4">{children}</CardContent>
   </Card>
 );
 
-const Row = ({ children }) => <div className="grid grid-cols-1 md:grid-cols-2 gap-3">{children}</div>;
+const Row = ({ children }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">{children}</div>
+);
 
 // ---------- main app ----------
 export default function App() {
@@ -328,6 +327,7 @@ export default function App() {
     department: lang === "ar" ? "المالية" : "Finance",
     managerName: "",
     managerEmail: "",
+    coManagers: [{ name: "", email: "" }], // حتى 3 مدراء (نضيف لاحقاً واجهة)
     steps: [
       { key: "screen", label: L.steps.screen, enabled: true },
       { key: "phone", label: L.steps.phone, enabled: true },
@@ -338,11 +338,12 @@ export default function App() {
     ],
   });
 
-  // Refresh step labels when language changes
-  const syncSteps = () => setCreatingJob(v => ({
-    ...v,
-    steps: v.steps.map(s => ({ ...s, label: STR[lang].steps[s.key] }))
-  }));
+  // Sync step labels when language changes
+  const syncSteps = () =>
+    setCreatingJob((v) => ({
+      ...v,
+      steps: v.steps.map((s) => ({ ...s, label: STR[lang].steps[s.key] })),
+    }));
 
   const [candidate, setCandidate] = useState({
     name: "",
@@ -352,24 +353,37 @@ export default function App() {
     interviewDate: fmtDateTimeLocal(new Date(Date.now() + 24 * 3600 * 1000)),
     interviewDurationMins: 60,
     interviewMode: lang === "ar" ? "عن بُعد" : "Online",
-    location: lang === "ar" ? "Microsoft Teams" : "Microsoft Teams",
+    location: "Microsoft Teams",
   });
 
-  const [feedback, setFeedback] = useState({ rating: STR[lang].ratings.sy, notes: "" });
-  const [offer, setOffer] = useState({ salary: "", currency: "SAR", startDate: fmtDateTimeLocal(new Date(Date.now() + 7 * 24 * 3600 * 1000)), notes: "", attachment: null });
+  const [feedback, setFeedback] = useState({
+    rating: STR[lang].ratings.sy,
+    notes: "",
+  });
 
-  const activeJob = useMemo(() => (activeJobIdx == null ? null : jobs[activeJobIdx]), [activeJobIdx, jobs]);
+  const [offer, setOffer] = useState({
+    salary: "",
+    currency: "SAR",
+    startDate: fmtDateTimeLocal(new Date(Date.now() + 7 * 24 * 3600 * 1000)),
+    notes: "",
+    attachment: null,
+  });
+
+  const activeJob = useMemo(
+    () => (activeJobIdx == null ? null : jobs[activeJobIdx]),
+    [activeJobIdx, jobs]
+  );
 
   function addJob() {
     const job = {
       ...creatingJob,
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
-      pipeline: creatingJob.steps.filter(s => s.enabled).map(s => s.key),
+      pipeline: creatingJob.steps.filter((s) => s.enabled).map((s) => s.key),
       candidates: [],
       status: "Open",
     };
-    setJobs(j => [...j, job]);
+    setJobs((j) => [...j, job]);
     setActiveJobIdx(jobs.length);
   }
 
@@ -381,7 +395,7 @@ export default function App() {
       status: lang === "ar" ? "تم تحديد مقابلة" : "Interview Scheduled",
       history: [],
     };
-    setJobs(prev => {
+    setJobs((prev) => {
       const clone = [...prev];
       clone[activeJobIdx] = {
         ...clone[activeJobIdx],
@@ -391,76 +405,96 @@ export default function App() {
     });
   }
 
-  function toICSFile({title, description, start, end, location, managerEmail, attendees}){
-    const toUTC = (d)=>{
-      const dt = new Date(d);
-      const pad = (x)=>String(x).padStart(2,'0');
-      return `${dt.getUTCFullYear()}${pad(dt.getUTCMonth()+1)}${pad(dt.getUTCDate())}T${pad(dt.getUTCHours())}${pad(dt.getUTCMinutes())}${pad(dt.getUTCSeconds())}Z`;
-    };
-    const lines = [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "CALSCALE:GREGORIAN",
-      "METHOD:REQUEST",
-      "BEGIN:VEVENT",
-      `UID:${Date.now()}@ats-lite`,
-      `DTSTAMP:${toUTC(new Date())}`,
-      `DTSTART:${toUTC(start)}`,
-      `DTEND:${toUTC(end)}`,
-      `SUMMARY:${title}`,
-      `DESCRIPTION:${(description||'').replace(/\\n/g,'\\\\n')}`,
-      location?`LOCATION:${location}`:"",
-      managerEmail?`ORGANIZER:MAILTO:${managerEmail}`:"",
-      ...(attendees||[]).map(a=>`ATTENDEE;CN=${a.name||'Attendee'}:MAILTO:${a.email}`),
-      "END:VEVENT",
-      "END:VCALENDAR"
-    ].filter(Boolean).join("\\n");
-    return lines;
+  function allManagerEmails(job) {
+    const emails = [job.managerEmail]
+      .concat((job.coManagers || []).map((m) => m.email))
+      .filter(Boolean);
+    return Array.from(new Set(emails));
   }
 
   function handleSendInterviewInvite() {
     if (!activeJob) return;
     const start = new Date(candidate.interviewDate);
-    const end = new Date(start.getTime() + Number(candidate.interviewDurationMins) * 60000);
-    const title = STR[lang].inviteTitle({ role: activeJob.title, name: candidate.name });
-    const description = STR[lang].inviteDesc({ name: candidate.name, role: activeJob.title, mode: candidate.interviewMode, location: candidate.location, hm: creatingJob.managerName });
+    const end = new Date(
+      start.getTime() + Number(candidate.interviewDurationMins) * 60000
+    );
+    const title = STR[lang].inviteTitle({
+      role: activeJob.title,
+      name: candidate.name,
+    });
+    const description = STR[lang].inviteDesc({
+      name: candidate.name,
+      role: activeJob.title,
+      mode: candidate.interviewMode,
+      location: candidate.location,
+      hm: creatingJob.managerName,
+    });
 
-    const ics = toICSFile({
+    const ics = toICS({
       title,
       description,
       start,
       end,
       location: candidate.location,
-      managerEmail: creatingJob.managerEmail,
+      organizerEmail: creatingJob.managerEmail,
       attendees: [
         { name: candidate.name, email: candidate.email },
-        { name: creatingJob.managerName || (lang === "ar" ? "مدير التوظيف" : "Hiring Manager"), email: creatingJob.managerEmail },
+        ...allManagerEmails(activeJob).map((e) => ({
+          name:
+            creatingJob.managerName || (lang === "ar" ? "مدير التوظيف" : "Hiring Manager"),
+          email: e,
+        })),
       ],
     });
-    const blob = new Blob([ics], {type: "text/calendar"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `Interview-${candidate.name}.ics`;
-    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    download(`Interview-${candidate.name}.ics`, ics);
 
     const subject = STR[lang].inviteEmailSubject(activeJob.title);
-    const body = STR[lang].inviteEmailBody({ name: candidate.name, role: activeJob.title, start: start.toString(), mode: candidate.interviewMode, location: candidate.location, hm: creatingJob.managerName });
-    const mailHref = `mailto:${encodeURIComponent([candidate.email, creatingJob.managerEmail].join(','))}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailHref;
+    const body = STR[lang].inviteEmailBody({
+      name: candidate.name,
+      role: activeJob.title,
+      start: start.toString(),
+      mode: candidate.interviewMode,
+      location: candidate.location,
+      hm: creatingJob.managerName,
+    });
+    mailto({
+      to: [candidate.email, ...allManagerEmails(activeJob)],
+      subject,
+      body,
+    });
   }
 
   function handleSubmitFeedback() {
     if (activeJobIdx == null) return;
-    setJobs(prev => {
+    setJobs((prev) => {
       const clone = [...prev];
       const job = clone[activeJobIdx];
       const lastCandidate = job.candidates[job.candidates.length - 1];
       if (!lastCandidate) return prev;
-      lastCandidate.history.push({ type: "feedback", date: new Date().toISOString(), ...feedback });
-      lastCandidate.status = `${STR[lang].feedbackTitle}: ${feedback.rating}`;
+      lastCandidate.history.push({
+        type: "feedback",
+        date: new Date().toISOString(),
+        ...feedback,
+      });
+      lastCandidate.status = `${L.feedbackTitle}: ${feedback.rating}`;
       clone[activeJobIdx] = { ...job };
       return clone;
+    });
+
+    // رسالة للمدير الأساسي فقط (كما طلبت)
+    const subject = `[${activeJob.title}] ${L.feedbackTitle}`;
+    const body =
+      lang === "ar"
+        ? `مرحبًا ${creatingJob.managerName || ""},
+
+يرجى مراجعة تقييم المقابلة الأخيرة وإضافة ملاحظاتك إن لزم.`
+        : `Hello ${creatingJob.managerName || ""},
+
+Please review the post-interview feedback and add your notes if needed.`;
+    mailto({
+      to: [creatingJob.managerEmail],
+      subject,
+      body,
     });
   }
 
@@ -470,9 +504,22 @@ export default function App() {
     if (!lastCandidate) return;
 
     const subject = STR[lang].offerSubject(activeJob.title);
-    const body = STR[lang].offerBody({ name: lastCandidate.name, role: activeJob.title, salary: offer.salary, currency: offer.currency, start: new Date(offer.startDate).toDateString(), notes: offer.notes, hm: creatingJob.managerName });
-    const mailHref = `mailto:${encodeURIComponent(lastCandidate.email)}?cc=${encodeURIComponent(creatingJob.managerEmail)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailHref;
+    const body = STR[lang].offerBody({
+      name: lastCandidate.name,
+      role: activeJob.title,
+      salary: offer.salary,
+      currency: offer.currency,
+      start: new Date(offer.startDate).toDateString(),
+      notes: offer.notes,
+      hm: creatingJob.managerName,
+    });
+    // المرفق لا يرسل تلقائياً عبر mailto (قيود البريد)، لكنها خطوة واجهة
+    mailto({
+      to: [lastCandidate.email],
+      cc: [creatingJob.managerEmail],
+      subject,
+      body,
+    });
   }
 
   function handleJoiningReminder() {
@@ -482,33 +529,32 @@ export default function App() {
 
     const start = new Date(offer.startDate);
     const end = new Date(start.getTime() + 60 * 60 * 1000);
-    const ics = toICSFile({
+    const ics = toICS({
       title: STR[lang].joiningTitle(lastCandidate.name),
       description: STR[lang].joiningDesc(lastCandidate.name, activeJob.title),
       start,
       end,
       location: lang === "ar" ? "المكتب" : "Office",
-      managerEmail: creatingJob.managerEmail,
-      attendees: [{ name: creatingJob.managerName || (lang === "ar" ? "مدير التوظيف" : "Hiring Manager"), email: creatingJob.managerEmail }],
+      organizerEmail: creatingJob.managerEmail,
+      attendees: [
+        { name: creatingJob.managerName || (lang === "ar" ? "مدير التوظيف" : "Hiring Manager"), email: creatingJob.managerEmail }
+      ],
     });
-    const blob = new Blob([ics], {type: "text/calendar"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `Joining-${lastCandidate.name}.ics`;
-    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    download(`Joining-${lastCandidate.name}.ics`, ics);
 
     const subject = STR[lang].joiningSubject(lastCandidate.name, start.toDateString());
     const body = STR[lang].joiningBody(lastCandidate.name, start.toDateString());
-    const mailHref = `mailto:${encodeURIComponent(creatingJob.managerEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailHref;
+    mailto({ to: [creatingJob.managerEmail], subject, body });
   }
 
   const stats = useMemo(() => {
-    let total = 0, scheduled = 0, offered = 0, joined = 0;
-    jobs.forEach(j => {
+    let total = 0,
+      scheduled = 0,
+      offered = 0,
+      joined = 0;
+    jobs.forEach((j) => {
       total += j.candidates.length;
-      j.candidates.forEach(c => {
+      j.candidates.forEach((c) => {
         if (c.status?.includes("Interview") || c.status?.includes("مقابلة")) scheduled++;
         if (c.status?.includes("Offer") || c.status?.includes("عرض")) offered++;
         if (c.status?.includes("Joined") || c.status?.includes("مباشرة")) joined++;
@@ -521,14 +567,21 @@ export default function App() {
     <div dir={dir} className={`min-h-screen bg-neutral-50 p-4 md:p-8 ${align}`}>
       <div className="max-w-6xl mx-auto grid gap-6">
         <div className="flex items-center justify-between">
-          <motion.h1 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-2xl md:text-3xl font-semibold tracking-tight flex items-center gap-2">
+          <motion.h1
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-2xl md:text-3xl font-semibold tracking-tight flex items-center gap-2"
+          >
             <Briefcase className="w-7 h-7" /> {L.appTitle}
           </motion.h1>
           <div className="flex items-center gap-2">
             <Label className="text-sm">{L.lang}</Label>
-            <Select value={lang} onValueChange={(v)=>{ setLang(v); syncSteps(); }}>
-              <SelectItem value="ar">العربية</SelectItem>
-              <SelectItem value="en">English</SelectItem>
+            <Select value={lang} onValueChange={(v) => { setLang(v); syncSteps(); }}>
+              <SelectTrigger className="w-28"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ar">العربية</SelectItem>
+                <SelectItem value="en">English</SelectItem>
+              </SelectContent>
             </Select>
           </div>
         </div>
@@ -536,22 +589,22 @@ export default function App() {
         {/* Dashboard */}
         <Section title={L.overview} icon={Building2} right={<span className="text-sm text-neutral-500">{L.demo}</span>}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <Card className="p-4 rounded-2xl text-center">
-              <div className="text-sm text-neutral-500">{L.jobs}</div>
-              <div className="text-2xl font-semibold">{jobs.length}</div>
-            </Card>
-            <Card className="p-4 rounded-2xl text-center">
-              <div className="text-sm text-neutral-500">{L.candidates}</div>
-              <div className="text-2xl font-semibold">{stats.total}</div>
-            </Card>
-            <Card className="p-4 rounded-2xl text-center">
-              <div className="text-sm text-neutral-500">{L.interviews}</div>
-              <div className="text-2xl font-semibold">{stats.scheduled}</div>
-            </Card>
-            <Card className="p-4 rounded-2xl text-center">
-              <div className="text-sm text-neutral-500">{L.offers}</div>
-              <div className="text-2xl font-semibold">{stats.offered}</div>
-            </Card>
+            <div className="stat">
+              <div className="title">{L.jobs}</div>
+              <div className="value">{jobs.length}</div>
+            </div>
+            <div className="stat">
+              <div className="title">{L.candidates}</div>
+              <div className="value">{stats.total}</div>
+            </div>
+            <div className="stat">
+              <div className="title">{L.interviews}</div>
+              <div className="value">{stats.scheduled}</div>
+            </div>
+            <div className="stat">
+              <div className="title">{L.offers}</div>
+              <div className="value">{stats.offered}</div>
+            </div>
           </div>
         </Section>
 
@@ -560,31 +613,45 @@ export default function App() {
           <Row>
             <div className="space-y-2">
               <Label>{L.jobTitle}</Label>
-              <Input value={creatingJob.title} onChange={e => setCreatingJob(v => ({ ...v, title: e.target.value }))} />
+              <Input value={creatingJob.title} onChange={(e) => setCreatingJob((v) => ({ ...v, title: e.target.value }))} />
             </div>
             <div className="space-y-2">
               <Label>{L.department}</Label>
-              <Input value={creatingJob.department} onChange={e => setCreatingJob(v => ({ ...v, department: e.target.value }))} />
+              <Input value={creatingJob.department} onChange={(e) => setCreatingJob((v) => ({ ...v, department: e.target.value }))} />
             </div>
             <div className="space-y-2">
               <Label>{L.hmName}</Label>
-              <Input value={creatingJob.managerName} onChange={e => setCreatingJob(v => ({ ...v, managerName: e.target.value }))} />
+              <Input value={creatingJob.managerName} onChange={(e) => setCreatingJob((v) => ({ ...v, managerName: e.target.value }))} />
             </div>
             <div className="space-y-2">
               <Label>{L.hmEmail}</Label>
-              <Input type="email" value={creatingJob.managerEmail} onChange={e => setCreatingJob(v => ({ ...v, managerEmail: e.target.value }))} />
+              <Input type="email" value={creatingJob.managerEmail} onChange={(e) => setCreatingJob((v) => ({ ...v, managerEmail: e.target.value }))} />
             </div>
           </Row>
+
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-4">
             {creatingJob.steps.map((s, i) => (
               <div key={s.key} className="flex items-center gap-2 p-3 rounded-xl border">
-                <Switch checked={s.enabled} onCheckedChange={val => setCreatingJob(v => { const steps = [...v.steps]; steps[i] = { ...steps[i], enabled: val }; return { ...v, steps }; })} />
+                <Switch
+                  checked={s.enabled}
+                  onCheckedChange={(val) =>
+                    setCreatingJob((v) => {
+                      const steps = [...v.steps];
+                      steps[i] = { ...steps[i], enabled: val };
+                      return { ...v, steps };
+                    })
+                  }
+                />
                 <span>{s.label}</span>
               </div>
             ))}
           </div>
+
           <div className="pt-4">
-            <Button onClick={addJob} className="gap-2"><Briefcase className="w-4 h-4"/>{L.create}</Button>
+            <Button onClick={addJob} className="gap-2">
+              <Briefcase className="w-4 h-4" />
+              {L.create}
+            </Button>
           </div>
         </Section>
 
@@ -593,13 +660,19 @@ export default function App() {
           <Section title={L.jobsList} icon={Briefcase}>
             <div className="grid md:grid-cols-2 gap-3">
               {jobs.map((j, idx) => (
-                <Card key={j.id} className={`p-4 rounded-2xl cursor-pointer ${activeJobIdx===idx?"ring-2 ring-black/10": ""}`} onClick={() => setActiveJobIdx(idx)}>
+                <Card
+                  key={j.id}
+                  className={`p-4 rounded-2xl cursor-pointer ${activeJobIdx === idx ? "ring-2 ring-indigo-200" : ""}`}
+                  onClick={() => setActiveJobIdx(idx)}
+                >
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-base font-semibold">{j.title}</div>
-                      <div className="text-sm text-neutral-500">{j.department} • {j.pipeline.length} steps</div>
+                      <div className="text-sm text-neutral-500">
+                        {j.department} • {j.pipeline.length} steps
+                      </div>
                     </div>
-                    <ChevronRight className="w-5 h-5"/>
+                    <ChevronRight className="w-5 h-5" />
                   </div>
                 </Card>
               ))}
@@ -619,19 +692,19 @@ export default function App() {
                     <Row>
                       <div className="space-y-2">
                         <Label>{L.fullName}</Label>
-                        <Input value={candidate.name} onChange={e=>setCandidate(v=>({...v,name:e.target.value}))}/>
+                        <Input value={candidate.name} onChange={(e) => setCandidate((v) => ({ ...v, name: e.target.value }))} />
                       </div>
                       <div className="space-y-2">
                         <Label>{L.email}</Label>
-                        <Input type="email" value={candidate.email} onChange={e=>setCandidate(v=>({...v,email:e.target.value}))}/>
+                        <Input type="email" value={candidate.email} onChange={(e) => setCandidate((v) => ({ ...v, email: e.target.value }))} />
                       </div>
                       <div className="space-y-2">
                         <Label>{L.phone}</Label>
-                        <Input value={candidate.phone} onChange={e=>setCandidate(v=>({...v,phone:e.target.value}))}/>
+                        <Input value={candidate.phone} onChange={(e) => setCandidate((v) => ({ ...v, phone: e.target.value }))} />
                       </div>
                       <div className="space-y-2">
                         <Label>{L.resume}</Label>
-                        <Input type="file" onChange={e=>setCandidate(v=>({...v,resumeFile:e.target.files?.[0]||null}))}/>
+                        <Input type="file" onChange={(e) => setCandidate((v) => ({ ...v, resumeFile: e.target.files?.[0] || null }))} />
                       </div>
                     </Row>
 
@@ -639,28 +712,45 @@ export default function App() {
                     <Row>
                       <div className="space-y-2">
                         <Label>{L.dateTime}</Label>
-                        <Input type="datetime-local" value={candidate.interviewDate} onChange={e=>setCandidate(v=>({...v,interviewDate:e.target.value}))}/>
+                        <Input
+                          type="datetime-local"
+                          value={candidate.interviewDate}
+                          onChange={(e) => setCandidate((v) => ({ ...v, interviewDate: e.target.value }))}
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label>{L.duration}</Label>
-                        <Input type="number" value={candidate.interviewDurationMins} onChange={e=>setCandidate(v=>({...v,interviewDurationMins:e.target.value}))}/>
+                        <Input
+                          type="number"
+                          value={candidate.interviewDurationMins}
+                          onChange={(e) => setCandidate((v) => ({ ...v, interviewDurationMins: e.target.value }))}
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label>{L.mode}</Label>
-                        <Select value={candidate.interviewMode} onValueChange={val=>setCandidate(v=>({...v,interviewMode:val}))}>
-                          <SelectItem value={lang === "ar" ? "عن بُعد" : "Online"}>{L.online}</SelectItem>
-                          <SelectItem value={lang === "ar" ? "حضوري" : "Onsite"}>{L.onsite}</SelectItem>
-                          <SelectItem value={lang === "ar" ? "هاتف" : "Phone"}>{L.phoneCall}</SelectItem>
+                        <Select
+                          value={candidate.interviewMode}
+                          onValueChange={(val) => setCandidate((v) => ({ ...v, interviewMode: val }))}
+                        >
+                          <SelectTrigger><SelectValue /></SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value={lang === "ar" ? "عن بُعد" : "Online"}>{L.online}</SelectItem>
+                            <SelectItem value={lang === "ar" ? "حضوري" : "Onsite"}>{L.onsite}</SelectItem>
+                            <SelectItem value={lang === "ar" ? "هاتف" : "Phone"}>{L.phoneCall}</SelectItem>
+                          </SelectContent>
                         </Select>
                       </div>
                       <div className="space-y-2">
                         <Label>{L.location}</Label>
-                        <Input value={candidate.location} onChange={e=>setCandidate(v=>({...v,location:e.target.value}))}/>
+                        <Input value={candidate.location} onChange={(e) => setCandidate((v) => ({ ...v, location: e.target.value }))} />
                       </div>
                     </Row>
 
                     <div className="flex flex-wrap gap-2 pt-2">
-                      <Button onClick={()=>{addCandidateToJob(); handleSendInterviewInvite();}} className="gap-2"><CalendarClock className="w-4 h-4"/>{L.sendInvite}</Button>
+                      <Button onClick={() => { addCandidateToJob(); handleSendInterviewInvite(); }} className="gap-2">
+                        <CalendarClock className="w-4 h-4" />
+                        {L.sendInvite}
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -673,21 +763,27 @@ export default function App() {
                       <Row>
                         <div className="space-y-2">
                           <Label>{L.rating}</Label>
-                          <Select value={feedback.rating} onValueChange={val=>setFeedback(v=>({...v,rating:val}))}>
-                            <SelectItem value={STR[lang].ratings.sy}>{STR[lang].ratings.sy}</SelectItem>
-                            <SelectItem value={STR[lang].ratings.y}>{STR[lang].ratings.y}</SelectItem>
-                            <SelectItem value={STR[lang].ratings.ly}>{STR[lang].ratings.ly}</SelectItem>
-                            <SelectItem value={STR[lang].ratings.n}>{STR[lang].ratings.n}</SelectItem>
-                            <SelectItem value={STR[lang].ratings.no}>{STR[lang].ratings.no}</SelectItem>
-                            <SelectItem value={STR[lang].ratings.sno}>{STR[lang].ratings.sno}</SelectItem>
+                          <Select value={feedback.rating} onValueChange={(val) => setFeedback((v) => ({ ...v, rating: val }))}>
+                            <SelectTrigger><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value={STR[lang].ratings.sy}>{STR[lang].ratings.sy}</SelectItem>
+                              <SelectItem value={STR[lang].ratings.y}>{STR[lang].ratings.y}</SelectItem>
+                              <SelectItem value={STR[lang].ratings.ly}>{STR[lang].ratings.ly}</SelectItem>
+                              <SelectItem value={STR[lang].ratings.n}>{STR[lang].ratings.n}</SelectItem>
+                              <SelectItem value={STR[lang].ratings.no}>{STR[lang].ratings.no}</SelectItem>
+                              <SelectItem value={STR[lang].ratings.sno}>{STR[lang].ratings.sno}</SelectItem>
+                            </SelectContent>
                           </Select>
                         </div>
                         <div className="space-y-2 md:col-span-1">
                           <Label>{L.notes}</Label>
-                          <Textarea rows={5} value={feedback.notes} onChange={e=>setFeedback(v=>({...v,notes:e.target.value}))}/>
+                          <Textarea rows={5} value={feedback.notes} onChange={(e) => setFeedback((v) => ({ ...v, notes: e.target.value }))} />
                         </div>
                       </Row>
-                      <Button onClick={handleSubmitFeedback} className="gap-2"><CheckCircle2 className="w-4 h-4"/>{L.submitFeedback}</Button>
+                      <Button onClick={handleSubmitFeedback} className="gap-2">
+                        <CheckCircle2 className="w-4 h-4" />
+                        {L.submitFeedback}
+                      </Button>
                     </CardContent>
                   </Card>
 
@@ -697,32 +793,45 @@ export default function App() {
                       <Row>
                         <div className="space-y-2">
                           <Label>{L.salary}</Label>
-                          <Input placeholder={lang==="ar"?"مثال: 10,000":"e.g., 10,000"} value={offer.salary} onChange={e=>setOffer(v=>({...v,salary:e.target.value}))}/>
+                          <Input
+                            placeholder={lang === "ar" ? "مثال: 10,000" : "e.g., 10,000"}
+                            value={offer.salary}
+                            onChange={(e) => setOffer((v) => ({ ...v, salary: e.target.value }))}
+                          />
                         </div>
                         <div className="space-y-2">
                           <Label>{L.currency}</Label>
-                          <Select value={offer.currency} onValueChange={val=>setOffer(v=>({...v,currency:val}))}>
-                            <SelectItem value="SAR">SAR</SelectItem>
-                            <SelectItem value="USD">USD</SelectItem>
-                            <SelectItem value="AED">AED</SelectItem>
+                          <Select value={offer.currency} onValueChange={(val) => setOffer((v) => ({ ...v, currency: val }))}>
+                            <SelectTrigger><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="SAR">SAR</SelectItem>
+                              <SelectItem value="USD">USD</SelectItem>
+                              <SelectItem value="AED">AED</SelectItem>
+                            </SelectContent>
                           </Select>
                         </div>
                         <div className="space-y-2">
                           <Label>{L.startDate}</Label>
-                          <Input type="datetime-local" value={offer.startDate} onChange={e=>setOffer(v=>({...v,startDate:e.target.value}))}/>
+                          <Input type="datetime-local" value={offer.startDate} onChange={(e) => setOffer((v) => ({ ...v, startDate: e.target.value }))} />
                         </div>
                         <div className="space-y-2">
                           <Label>{L.offerNotes}</Label>
-                          <Input value={offer.notes} onChange={e=>setOffer(v=>({...v,notes:e.target.value}))}/>
+                          <Input value={offer.notes} onChange={(e) => setOffer((v) => ({ ...v, notes: e.target.value }))} />
                         </div>
                         <div className="space-y-2">
                           <Label>{L.attachOffer}</Label>
-                          <Input type="file" onChange={e=>setOffer(v=>({...v,attachment:e.target.files?.[0]||null}))}/>
+                          <Input type="file" onChange={(e) => setOffer((v) => ({ ...v, attachment: e.target.files?.[0] || null }))} />
                         </div>
                       </Row>
                       <div className="flex flex-wrap gap-2">
-                        <Button onClick={handleSendOffer} className="gap-2"><Mail className="w-4 h-4"/>{L.sendOffer}</Button>
-                        <Button onClick={handleJoiningReminder} variant="secondary" className="gap-2"><Calendar className="w-4 h-4"/>{L.createJoining}</Button>
+                        <Button onClick={handleSendOffer} className="gap-2">
+                          <Mail className="w-4 h-4" />
+                          {L.sendOffer}
+                        </Button>
+                        <Button onClick={handleJoiningReminder} variant="secondary" className="gap-2">
+                          <Calendar className="w-4 h-4" />
+                          {L.createJoining}
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -737,11 +846,13 @@ export default function App() {
                     <div className="text-sm text-neutral-500">{L.none}</div>
                   ) : (
                     <div className="space-y-3">
-                      {activeJob.candidates.map(c => (
+                      {activeJob.candidates.map((c) => (
                         <div key={c.id} className="p-3 border rounded-xl flex items-center justify-between">
                           <div>
                             <div className="font-medium">{c.name}</div>
-                            <div className="text-xs text-neutral-500">{c.email} • {c.phone}</div>
+                            <div className="text-xs text-neutral-500">
+                              {c.email} • {c.phone}
+                            </div>
                           </div>
                           <div className="text-xs md:text-sm">{c.status}</div>
                         </div>
