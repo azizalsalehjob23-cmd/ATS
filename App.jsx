@@ -1,11 +1,18 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "./ui/Card.jsx";
-import { Button } from "./ui/Button.jsx";
-import { Input, Textarea, Label } from "./ui/Input.jsx";
-import { Switch } from "./ui/Switch.jsx";
-import { Select, SelectItem } from "./ui/Select.jsx";
-import { Calendar, CheckCircle2, Mail, CalendarClock, UserRound, Briefcase, Building2, Plus, ChevronRight } from "lucide-react";
+
+// المكوّنات المحلية (نفس المجلد)
+import { Card, CardContent } from "./Card.jsx";
+import { Button } from "./Button.jsx";
+import { Input, Textarea, Label } from "./Input.jsx";
+import { Switch } from "./Switch.jsx";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "./Select.jsx";
+
+// أيقونات
+import {
+  Calendar, CheckCircle2, Mail, CalendarClock,
+  UserRound, Briefcase, Building2, Plus, ChevronRight
+} from "lucide-react";
 
 // ---------- i18n ----------
 const STR = {
