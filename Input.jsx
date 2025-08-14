@@ -1,17 +1,13 @@
-import React from "react";
+import React from 'react';
 
-export function Input({ className = "", ...props }) {
-  return <input className={`input ${className}`} {...props} />;
-}
-
-export function Textarea({ className = "", rows = 4, ...props }) {
-  return <textarea className={`textarea ${className}`} rows={rows} {...props} />;
-}
-
-export function Label({ className = "", children, ...props }) {
+export default function Input({ type = 'text', placeholder, value, onChange }) {
   return (
-    <label className={`label ${className}`} {...props}>
-      {children}
-    </label>
+    <input
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className="border rounded px-3 py-2 w-full"
+    />
   );
 }
