@@ -1,16 +1,9 @@
-import React from "react";
+import React from 'react';
 
-export function Card({ children, className = "", ...props }) {
+export default function Card({ title, children }) {
   return (
-    <div className={`card ${className}`} {...props}>
-      {children}
-    </div>
-  );
-}
-
-export function CardContent({ children, className = "", ...props }) {
-  return (
-    <div className={`p-4 ${className}`} {...props}>
+    <div className="border rounded p-4 bg-white shadow">
+      {title && <h2 className="font-semibold mb-3">{title}</h2>}
       {children}
     </div>
   );
