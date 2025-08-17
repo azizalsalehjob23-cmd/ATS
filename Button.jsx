@@ -1,9 +1,10 @@
+// Button.jsx
 import React from 'react';
 
 export default function Button({
   children,
   onClick,
-  type = 'button',      // مهم: مو submit عشان ما يوقف الحدث
+  type = 'button',        // اجعله "submit" داخل الفورم ليشتغل onSubmit
   variant = 'primary',
   disabled = false,
   className = '',
@@ -21,8 +22,11 @@ export default function Button({
   const styles = variants[variant] || variants.primary;
 
   function handleClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
+    // مهم: لا نمنع الإجراء إذا كان الزر submit حتى يشتغل onSubmit حق الفورم
+    if (type !== 'submit') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     if (!disabled && typeof onClick === 'function') onClick(e);
   }
 
